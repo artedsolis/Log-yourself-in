@@ -10,4 +10,6 @@
   ));  
   } 
 
+header('Location:index.php');
+
 ?>
