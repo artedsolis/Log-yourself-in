@@ -17,20 +17,20 @@
 
           <div class="form-group">
             <label for="exampleInputEmail1">Username</label>
-            <input type="text" class="form-control" id="exampleInputUsername" aria-describedby="emailHelp" placeholder="Enter username">
+            <input type="text" class="form-control" id="exampleInputUsername" aria-describedby="emailHelp" placeholder="Enter username" name="username">
             <small id="emailHelp" class="form-text text-muted">Be original and write a funy one.</small>
           </div>
 
           <div class="form-group">
             <label for="exampleInputEmail1">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" name="email">
             <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
           </div>
 
 
           <div class="form-group">
             <label for="inputPassword6">Password</label>
-            <input type="password" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline">
+            <input type="password" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline" name="password">
             <small id="passwordHelpInline" class="text-muted">
               Must be 8-20 characters long.
             </small>
@@ -54,14 +54,17 @@ catch (Exception $e)
   die('Erreur : ' . $e->getMessage());
 }
 
-  $req = $bdd->prepare('INSERT INTO student(username,email,password)VALUES(:username, :email, :password)');
-  $req->execute (array(
+  if(isset ($_POST['username'], $_POST['email'], $_POST['password']))
+  {
+  $req = $bdd->prepare('INSERT INTO student(username,email,password) VALUES(:username, :email, :password)');
+  $req->execute(array(
   'username' => $username,
   'email' => $email,
   'password' => $password  
-  ));
-  
+  ));  
+  }
 
+  
   ?>
 
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
