@@ -1,6 +1,4 @@
   <?php
-
-session_start();
 // tester la présence d'erreurs et connexion à la base de donées
 try
 {
@@ -11,6 +9,23 @@ catch (Exception $e)
   die('Erreur : ' . $e->getMessage());  
 }
   
+// function for email validation
+
+function is_valid_email($mail)
+{
+  if(empty($email)){
+    echo "Email is required";
+    return false;
+  } else {
+    $email = test_input($mail);
+    if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+      echo "Invalid email format";
+      return false;
+    }
+  }
+}
+
+
   //déclaration des variables
 
 $username = $_POST['username'];
@@ -19,13 +34,27 @@ $password = $_POST['password'];
 $cpasword = $_POST['cpassword'];
 
 // vérifier si les deux passwords matchen
-
-if($_POST['password'] == $_POST['cpassword']){
-$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-include ("confirmation.php");;
-}else{
-header ('location:wrongpass.php');
+function in_valid_passwords ($password, $cpassword)
+{
+  if(empty($password))
+  {
+    echo "password is required";
+    return false;
+  }
+else if ($password != $cpassword)
+{
+ echo 'your passwords do not match. Please try carefully !';  
 }
+//password match
+return true;
+}
+  
+//if($_POST['password'] == $_POST['cpassword']){
+//$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+//include ("confirmation.php");;
+//}else{
+//header ('location:wrongpass.php');
+//}
   
   //Database connexion
 
