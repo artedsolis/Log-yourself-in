@@ -9,56 +9,26 @@ catch (Exception $e)
   die('Erreur : ' . $e->getMessage());  
 }
   
-// function for email validation
-
-function is_valid_email($mail)
-{
-  if(empty($email)){
-    echo "Email is required";
-    return false;
-  } else {
-    $email = test_input($mail);
-    if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
-      echo "Invalid email format";
-      return false;
-    }
-  }
-}
-
-
   //déclaration des variables
 
 $username = $_POST['username'];
 $email = $_POST['email'];
 $password = $_POST['password'];
-$cpasword = $_POST['cpassword'];
+//$cpasword = $_POST['cpassword'];
 
 // vérifier si les deux passwords matchen
-function in_valid_passwords ($password, $cpassword)
-{
-  if(empty($password))
-  {
-    echo "password is required";
-    return false;
-  }
-else if ($password != $cpassword)
-{
- echo 'your passwords do not match. Please try carefully !';  
-}
-//password match
-return true;
-}
   
-//if($_POST['password'] == $_POST['cpassword']){
-//$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-//include ("confirmation.php");;
-//}else{
-//header ('location:wrongpass.php');
-//}
+if($_POST['password'] == $_POST['cpassword']){
+$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+include ("confirmation.php");
+}else{
+header ('location:wrongpass.php');
+  return false;
+}
   
   //Database connexion
 
-  if(isset ($_POST['username'], $_POST['email'], $_POST['password'], $_POST['cpassword'])){
+  if(isset ($_POST['username'], $_POST['email'], $_POST['password'])){
   $req = $bdd->prepare('INSERT INTO student(username,email,password) VALUES(:username, :email, :password)');
   $req->execute(array(
   'username' => $username,
