@@ -1,46 +1,39 @@
   <?php
-// tester la présence d'erreurs et connexion à la base de donées
-try
-{
-  $bdd = new PDO('mysql:host=localhost;dbname=becode;charset=utf8', 'root','');
-}
-catch (Exception $e)
-{
-  die('Erreur : ' . $e->getMessage());  
-}
-  
-  //déclaration des variables
-
-//$username = $_POST['username'];
-//$email = $_POST['email'];
-//$password = $_POST['password'];
-//$cpasword = $_POST['cpassword'];
-
-// fonction vérification password
-  
-
+   
+   // pour tester et pouvoir imprimer mes données en forme d'array
+   //var_dump($_POST);
 
   //Database connexion
 
   if(isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password'])){
+    // tester la présence d'erreurs et connexion à la base de donées
+    try
+    {
+    $bdd = new PDO('mysql:host=localhost;dbname=becode;charset=utf8', 'root','');
+    }
+    catch (Exception $e)
+    {
+    die('Erreur : ' . $e->getMessage());  
+    }
     //declaration des variables
     $username = $_POST['username'];
     $email = $_POST['email'];
     $password = $_POST['password'];
     //verification du password
-      // si les passwords coincident 
+      // si les passwords coincident, un message de validation s'affiche
       if($_POST['password'] == $_POST['cpassword'])
       {
       $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
       include ("confirmation.php");
       } 
-    // si les passwords sont différents
-      elseif ($_POST['password'] != $_POST['cpassword']) {
+      // si les passwords sont différents le formulaire ne s'envoie pas, et redirige vers une page d'erreur
+      if ($_POST['password'] != $_POST['cpassword']) 
+      {
       header ('location:wrongpass.php');
-      return false;
       }
-    //si tous les champs sont remplis et les passwords sont corrects envoi les données
+    //si tous les champs sont remplis et les passwords sont corrects, on envoi les données vers la BDD
       else {
+        echo 'ok';
           $req = $bdd->prepare('INSERT INTO student(username,email,password) VALUES(:username, :email, :password)');
           $req->execute(array(
           'username' => $username,
