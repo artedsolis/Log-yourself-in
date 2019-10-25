@@ -21,9 +21,10 @@ $cpasword = $_POST['cpassword'];
 // vérifier si les deux passwords matchen
 
 if($_POST['password'] == $_POST['cpassword']){
-  echo '<p>OK</p>';
+$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+include ("confirmation.php");;
 }else{
-  echo '<p>WRONG</p>';
+header ('location:wrongpass.php');
 }
   
   //Database connexion
