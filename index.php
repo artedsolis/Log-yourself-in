@@ -11,30 +11,43 @@ catch (Exception $e)
   
   //déclaration des variables
 
-$username = $_POST['username'];
-$email = $_POST['email'];
-$password = $_POST['password'];
+//$username = $_POST['username'];
+//$email = $_POST['email'];
+//$password = $_POST['password'];
 //$cpasword = $_POST['cpassword'];
 
 // fonction vérification password
-      if($_POST['password'] == $_POST['cpassword']){
+  
+
+
+  //Database connexion
+
+  if(isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password'])){
+    //declaration des variables
+    $username = $_POST['username'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    //verification du password
+      // si les passwords coincident 
+      if($_POST['password'] == $_POST['cpassword'])
+      {
       $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
       include ("confirmation.php");
-      } else {
+      } 
+    // si les passwords sont différents
+      elseif ($_POST['password'] != $_POST['cpassword']) {
       header ('location:wrongpass.php');
       return false;
       }
- 
-  
-  //Database connexion
-  if(isset ($_POST['username'], $_POST['email'], $_POST['password'])){
-  $req = $bdd->prepare('INSERT INTO student(username,email,password) VALUES(:username, :email, :password)');
-  $req->execute(array(
-  'username' => $username,
-  'email' => $email,
-  'password' => $password  
-  ));  
-  }     
+    //si tous les champs sont remplis et les passwords sont corrects envoi les données
+      else {
+          $req = $bdd->prepare('INSERT INTO student(username,email,password) VALUES(:username, :email, :password)');
+          $req->execute(array(
+          'username' => $username,
+          'email' => $email,
+          'password' => $password)); 
+      }
+    }     
   ?>
 
 
