@@ -16,18 +16,17 @@ $email = $_POST['email'];
 $password = $_POST['password'];
 //$cpasword = $_POST['cpassword'];
 
-// vérifier si les deux passwords matchen
-  
-if($_POST['password'] == $_POST['cpassword']){
-$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-include ("confirmation.php");
-}else{
-header ('location:wrongpass.php');
-  return false;
-}
+// fonction vérification password
+      if($_POST['password'] == $_POST['cpassword']){
+      $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+      include ("confirmation.php");
+      } else {
+      header ('location:wrongpass.php');
+      return false;
+      }
+ 
   
   //Database connexion
-
   if(isset ($_POST['username'], $_POST['email'], $_POST['password'])){
   $req = $bdd->prepare('INSERT INTO student(username,email,password) VALUES(:username, :email, :password)');
   $req->execute(array(
