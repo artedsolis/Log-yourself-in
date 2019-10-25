@@ -15,11 +15,20 @@ catch (Exception $e)
 
 $username = $_POST['username'];
 $email = $_POST['email'];
-$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+$password = $_POST['password'];
+$cpasword = $_POST['cpassword'];
+
+// vérifier si les deux passwords matchen
+
+if($_POST['password'] == $_POST['cpassword']){
+  echo '<p>OK</p>';
+}else{
+  echo '<p>WRONG</p>';
+}
   
   //Database connexion
 
-  if(isset ($_POST['username'], $_POST['email'], $_POST['password'])){
+  if(isset ($_POST['username'], $_POST['email'], $_POST['password'], $_POST['cpassword'])){
   $req = $bdd->prepare('INSERT INTO student(username,email,password) VALUES(:username, :email, :password)');
   $req->execute(array(
   'username' => $username,
@@ -63,6 +72,14 @@ $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
             <div class="form-group">
               <label for="inputPassword6">Password</label>
               <input type="password" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline" name="password">
+              <small id="passwordHelpInline" class="text-muted">
+                Must be 8-20 characters long.
+              </small>
+            </div>
+
+            <div class="form-group">
+              <label for="inputPassword6">Confirm your password</label>
+              <input type="password" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline" name="cpassword">
               <small id="passwordHelpInline" class="text-muted">
                 Must be 8-20 characters long.
               </small>
