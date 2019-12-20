@@ -3,8 +3,7 @@
    // pour tester et pouvoir imprimer mes données en forme d'array
    //var_dump($_POST);
 
-  //Database connexion
-
+  //Connexion à la BDD
   if(isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password'])){
     // tester la présence d'erreurs et connexion à la base de donées
     try
